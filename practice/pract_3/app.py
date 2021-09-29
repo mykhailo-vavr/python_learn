@@ -1,5 +1,18 @@
 from linkedList import LinkedList
-from validation import Validation
+from functionsForOptions import FuncForOptions
+
+def options(option):
+    functions = FuncForOptions()
+    return {
+        "1": functions.f1,
+        "2": functions.f2,
+        "3": functions.f3,
+        "4": functions.f4,
+        "5": functions.f5,
+        "6": functions.f6,
+        "7": functions.f7,
+    }.get(option)
+
 
 def start(list):
     print("""Choose the option:
@@ -11,47 +24,15 @@ def start(list):
           6. Show list
           7. Exit""")
 
-    def getInt(message, isPositive=True):
-        print(message)
-        value = input()
-        Validation.isInteger(value)
-        value = int(value)
-        if isPositive:
-            Validation.isInRange(value, 0)
-        return int(value)
-
     option = input()
-
-    if option == "1":
-        count = getInt("Count of new items:")
-        list.getDataFromKeyboard(count)
-    elif option == "2":
-        count = getInt("Count of new items:")
-        a = getInt("First limit:", False)
-        b = getInt("Second limit:", False)
-        list.generateDataInRange(a,b,count)
-    elif option == "3":
-        index = getInt("Index of elem to insert")
-        print("Data to insert")
-        data = input()
-        list.insert(data, index)
-    elif option == "4":
-        index = getInt("Index of elem to remove")
-        list.remove(index)
-    elif option == "5":
-        print(list.getCountOfUniqieElems())
-    elif option == "6":
-        list.show()
-    elif option == "7":
-        exit()
+    method = options(option)
+    if method:
+        method(list)
     else:
         print("Choose correct option")
         start(list)
     start(list)
 
+
 list = LinkedList()
 start(list)
-
-
-# list.getDataFromKeyboard(3)
-# list.show()
