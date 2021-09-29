@@ -1,0 +1,16 @@
+{
+  "items": [
+    {
+      "checkin_datetime": 12,
+      "city": "Rome"
+    },
+    {
+      "checkin_datetime": 15,
+      "city": "Nice"
+    },
+    {
+      "checkin_datetime": 17,
+      "city": "Berlin"
+    }
+  ]
+}
