@@ -1,8 +1,8 @@
 from linkedList import LinkedList
 from functionsForOptions import FuncForOptions
 
-def options(option):
-    functions = FuncForOptions()
+def options(option, list):
+    functions = FuncForOptions(list)
     return {
         "1": functions.f1,
         "2": functions.f2,
@@ -25,9 +25,9 @@ def start(list):
           7. Exit""")
 
     option = input()
-    method = options(option)
+    method = options(option, list)
     if method:
-        method(list)
+        method()
     else:
         print("Choose correct option")
         start(list)

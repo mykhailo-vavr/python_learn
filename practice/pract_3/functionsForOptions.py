@@ -1,6 +1,9 @@
 from validation import Validation
 
 class FuncForOptions:
+    def __init__(self, list):
+        self.list = list
+
     @staticmethod
     def getInt(message, isPositive=True):
         print(message)
@@ -11,34 +14,31 @@ class FuncForOptions:
             Validation.isInRange(value, 0)
         return value
 
-    def f1(self, list):
+    def f1(self):
         count = self.getInt("Count of new items:")
-        list.getDataFromKeyboard(count)
+        self.list.getDataFromKeyboard(count)
 
-    def f2(self, list):
+    def f2(self):
         count = self.getInt("Count of new items:")
         a = self.getInt("First limit:", False)
         b = self.getInt("Second limit:", False)
-        list.generateDataInRange(a, b, count)
+        self.list.generateDataInRange(a, b, count)
 
-    def f3(self, list):
+    def f3(self):
         index = self.getInt("Index of elem to insert")
         print("Data to insert")
         data = input()
-        list.insert(data, index)
+        self.list.insert(data, index)
 
-    def f4(self, list):
+    def f4(self):
         index = self.getInt("Index of elem to remove")
-        list.remove(index)
+        self.list.remove(index)
 
-    @staticmethod
-    def f5(list):
-        print(list.getCountOfUniqieElems())
+    def f5(self):
+        print(self.list.getCountOfUniqieElems())
 
-    @staticmethod
-    def f6(list):
-        list.show()
+    def f6(self):
+        self.list.show()
 
-    @staticmethod
-    def f7(*args):
+    def f7(self):
         exit()
