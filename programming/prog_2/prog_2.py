@@ -2,8 +2,9 @@ def isNum(n):
     try:
         int(n)
     except:
-        print("Value should be integer")
-        exit()
+        return False
+    n = int(n)
+    return isinstance(n, int)
 
 
 def isPositive(n):
@@ -12,24 +13,25 @@ def isPositive(n):
 
 def getMatrix():
     print("Enter the dimension of the matrix")
-    n = input()
 
-    isNum(n)
+    n = input()
+    while not isNum(n):
+        print("Incorrect value")
+        n = input()
     n = int(n)
 
-    try:
-        if not isPositive(n):
-            raise ValueError()
-    except:
+    if not isPositive(n):
         print("Value should be >= 0")
-        exit()
+        getMatrix()
 
     A = []
     for i in range(n):
         row = []
         for j in range(n):
             num = input()
-            isNum(num)
+            while not isNum(num):
+                print("Incorrect value")
+                num = input()
             num = int(num)
             row.append(num)
         A.append(row)
@@ -59,9 +61,30 @@ def showMatrix(matrix):
         print(matrix[i])
 
 
-A = getMatrix()
-showMatrix(A)
-print("\n")
+def options(option):
+    return {
+        "1": getMinNumFromMaxCol,
+        "2": showMatrix,
+        "3": exit
+    }.get(option)
 
-minNum = getMinNumFromMaxCol(A)
-print(minNum)
+
+def start(matrix):
+    print("""Choose the option:
+        1. Get min num from max col
+        2. Show matrix
+        3. Exit""")
+
+    option = input()
+    method = options(option)
+
+    if method:
+        method(matrix)
+    else:
+        print("Choose correct option")
+        start(matrix)
+    start(matrix)
+
+
+matrix = getMatrix()
+start(matrix)

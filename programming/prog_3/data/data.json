@@ -7,9 +7,7 @@
     {
       "checkin_datetime": 15,
       "city": "Nice",
-      "guest_name": "Tom12",
-      "booking_number": "123",
-      "price": "sad"
+      "price": 123.34
     },
     {
       "checkin_datetime": 17,
