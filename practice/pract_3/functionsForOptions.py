@@ -1,4 +1,5 @@
-from validation import Validation
+from validation import Validation as V
+
 
 class FuncForOptions:
     def __init__(self, list):
@@ -8,10 +9,16 @@ class FuncForOptions:
     def getInt(message, isPositive=True):
         print(message)
         value = input()
-        Validation.isInteger(value)
+
+        if not V.isInteger(value):
+            print("Invalid data")
+            return FuncForOptions.getInt(message, isPositive)
+
         value = int(value)
         if isPositive:
-            Validation.isInRange(value, 0)
+            if not V.isInRange(value, 0):
+                print("Invalid data")
+                return FuncForOptions.getInt(message, isPositive)
         return value
 
     def f1(self):
@@ -42,3 +49,17 @@ class FuncForOptions:
 
     def f7(self):
         exit()
+
+    def f8(self):
+        count = self.getInt("Count of new items:")
+        generator = self.list.getDataFromKeyboardGenerator(count)
+        for i in range(count):
+            self.list.push(next(generator))
+
+    def f9(self):
+        count = self.getInt("Count of new items:")
+        a = self.getInt("First limit:", False)
+        b = self.getInt("Second limit:", False)
+        generator = self.list.generateDataInRangeGenerator(a, b, count)
+        for i in range(count):
+            self.list.push(next(generator))

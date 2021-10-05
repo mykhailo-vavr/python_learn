@@ -5,7 +5,7 @@ class Validation:
             try:
                 int(value)
             except:
-                raise ValueError("Value should be integer")
+                return False
         return True
 
     @staticmethod
@@ -13,5 +13,5 @@ class Validation:
         if a > b:
             a, b = b, a
         if value < a or value > b:
-            raise ValueError("Value should be in range")
+            return False
         return True

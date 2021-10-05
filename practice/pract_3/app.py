@@ -11,6 +11,8 @@ def options(option, list):
         "5": functions.f5,
         "6": functions.f6,
         "7": functions.f7,
+        "8": functions.f8,
+        "9": functions.f9
     }.get(option)
 
 
@@ -22,7 +24,10 @@ def start(list):
           4. Remove data
           5. Get count of unique elems (task)
           6. Show list
-          7. Exit""")
+          7. Exit
+          
+          8. Get data from keyboard(using generator)
+          9. Generate an data in range [a, b](using generator)""")
 
     option = input()
     method = options(option, list)
