@@ -1,5 +1,6 @@
 {
-  "checkin_datetime": 2,
+  "checkin_datetime": "20.11.2002",
+  "checkout_datetime": "20.11.2001",
   "city": "Rome",
-  "price": 450
+  "price": 4
 }

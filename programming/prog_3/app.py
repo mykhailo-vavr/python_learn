@@ -46,3 +46,4 @@ collection = Collection(Hotel)
 path = "C:/python_learn_lnu/programming/prog_3/data/data.json"
 collection.set_items_from_file(path)
 start(collection)
+
