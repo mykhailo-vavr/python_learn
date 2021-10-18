@@ -1,0 +1,18 @@
+{
+  "items": [
+    {
+      "checkin_datetime": "01.01.2000",
+      "city": "Rome"
+    },
+    {
+      "checkin_datetime": 15,
+      "city": "Nice",
+      "price": 123.34
+    },
+    {
+      "checkin_datetime": 17,
+      "city": "Berlin"
+    }
+  ]
+}
+
