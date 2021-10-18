@@ -1,15 +1,18 @@
-from programming.prog_3.supportClasses.validation import Validation as V
+from supportClasses.validation import Validation as V
 import json
-import datetime
 
 
 class Hotel:
     cities = ["Rome", "Berlin", "Nice"]
     ID = 0
 
-    def __init__(self, checkin_datetime=None, checkout_datetime=None,
-                 city=None, booking_number=None,
-                 guest_name=None, price=None):
+    def __init__(self,
+                 checkin_datetime=None,
+                 checkout_datetime=None,
+                 city=None,
+                 booking_number=None,
+                 guest_name=None,
+                 price=None):
 
         self.__ID = Hotel.ID
         Hotel.ID += 1
@@ -25,59 +28,37 @@ class Hotel:
             if value == None:
                 getattr(self, f"set_{key[8:]}")("-1")
 
-    def check_date_interval(self, startDate, endDate):
-        if startDate == None \
-                or endDate == None:
-            return True
-
-        return V.isValidDateInterval(startDate, endDate)
+    def set_valid_data(self, set_func):
+        value = self.get_data_from_keyboard(
+            f"{set_func.__name__} (id:{self.get_ID()})")
+        getattr(self, f"{set_func.__name__}")(value)
 
     def get_data_from_keyboard(self, message):
-        print(f"Write correct {message}")
+        print(f"Incorrect {message}")
         return input()
 
+    @V.isValidDate
     def set_checkin_datetime(self, value):
-        if not V.isValidDate(value) or not self.check_date_interval(value, self.__checkout_datetime):
-            value = self.get_data_from_keyboard(f"checkin_datetime (id:{self.get_ID()})")
-            self.set_checkin_datetime(value)
         self.__checkin_datetime = value
 
+    @V.isValidDate
     def set_checkout_datetime(self, value):
-        if not V.isValidDate(value) or not self.check_date_interval(self.__checkin_datetime, value):
-            value = self.get_data_from_keyboard(f"checkout_datetime (id:{self.get_ID()})")
-            self.set_checkout_datetime(value)
         self.__checkout_datetime = value
 
+    @V.isAvailableValue
     def set_city(self, value):
-        if not V.isAvailableValue(value, self.cities):
-            value = self.get_data_from_keyboard(f"city (id:{self.get_ID()})")
-            self.set_city(value)
         self.__city = value
 
+    @V.isInSpecificFormat(r'^[a-zA-Z]{2}\d{6}$')
     def set_booking_number(self, value):
-        if not V.isInSpecificFormat(value, 2, 6):
-            value = self.get_data_from_keyboard(f"booking_number (id:{self.get_ID()})")
-            self.set_booking_number(value)
         self.__booking_number = value
 
+    @V.isInSpecificFormat(r'^[a-zA-Z]{2,}$')
     def set_guest_name(self, value):
-        if not V.isAlpha((value)):
-            value = self.get_data_from_keyboard(f"guest_name (id:{self.get_ID()})")
-            self.set_guest_name(value)
-
         self.__guest_name = value
 
+    @V.isIntegerInRange(0)
     def set_price(self, value):
-        if not V.isInteger(value):
-            value = self.get_data_from_keyboard(f"price (id:{self.get_ID()})")
-            self.set_price(value)
-
-        value = int(value)
-
-        if not V.isInRange(value, 0):
-            value = self.get_data_from_keyboard(f"price (id:{self.get_ID()})")
-            self.set_price(value)
-
         self.__price = value
 
     def get_ID(self):

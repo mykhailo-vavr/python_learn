@@ -2,17 +2,11 @@
   "items": [
     {
       "checkin_datetime": "01.01.2000",
-      "city": "Rome"
-    },
-    {
-      "checkin_datetime": 15,
-      "city": "Nice",
-      "price": 123.34
-    },
-    {
-      "checkin_datetime": 17,
-      "city": "Berlin"
+      "checkout_datetime": "01.01.2001",
+      "city": "Rome",
+      "booking_number": "AS123123",
+      "guest_name": "Jean",
+      "price": 200
     }
   ]
 }
-

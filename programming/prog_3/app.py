@@ -1,7 +1,7 @@
-from programming.prog_3.mainClasses.hotel import Hotel
-from programming.prog_3.supportClasses.collection import Collection
-from programming.prog_3.supportClasses.funcForOptions import FuncForOptions
-
+# from programming.prog_3.mainClasses.hotel import Hotel
+from mainClasses.hotel import Hotel
+from supportClasses.collection import Collection
+from supportClasses.funcForOptions import FuncForOptions
 
 # use for input "C:/python_learn_lnu/programming/prog_3/data/testData.json"
 # use for output "C:/python_learn_lnu/programming/prog_3/data/outputData.json"
@@ -22,7 +22,8 @@ def options(option, collection):
 
 
 def start(collection):
-    print("""Choose the option:
+    print("""
+Choose the option:
     1. Find data in collection
     2. Sort collection
     3. Delete item in collection
@@ -46,4 +47,3 @@ collection = Collection(Hotel)
 path = "C:/python_learn_lnu/programming/prog_3/data/data.json"
 collection.set_items_from_file(path)
 start(collection)
-

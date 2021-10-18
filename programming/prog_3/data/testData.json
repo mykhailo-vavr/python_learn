@@ -1,6 +1,8 @@
 {
-  "checkin_datetime": "20.11.2002",
-  "checkout_datetime": "20.11.2001",
+  "checkin_datetime": "20.11.2001",
+  "checkout_datetime": "20.11.2002",
   "city": "Rome",
-  "price": 4
+  "booking_number": "EY345345",
+  "guest_name": "Levi",
+  "price": 999
 }
