@@ -1,65 +1,56 @@
 from validation import Validation as V
+from patterns.strategy.strategy import DataGetterFromFile, DataGetterFromIterator
 
 
 class FuncForOptions:
     def __init__(self, list):
         self.list = list
 
-    @staticmethod
-    def getInt(message, isPositive=True):
+    def getInt(self, message, isPositive=True):
         print(message)
-        value = input()
 
-        if not V.isInteger(value):
-            print("Invalid data")
-            return FuncForOptions.getInt(message, isPositive)
-
-        value = int(value)
         if isPositive:
-            if not V.isInRange(value, 0):
-                print("Invalid data")
-                return FuncForOptions.getInt(message, isPositive)
+            value = self.getPositiveInt(input())
+        else:
+            value = self._getInt(input())
+
+        if isinstance(value, int):
+            return value
+
+        return self.getInt(message, isPositive)
+
+    @V.isIntegerInRange(-1)
+    def getPositiveInt(self, value):
+        return value
+
+    @V.isIntegerInRange()
+    def _getInt(self, value):
         return value
 
     def f1(self):
-        count = self.getInt("Count of new items:")
-        self.list.getDataFromKeyboard(count)
+        self.list.setDataGetter(DataGetterFromIterator())
 
     def f2(self):
-        count = self.getInt("Count of new items:")
-        a = self.getInt("First limit:", False)
-        b = self.getInt("Second limit:", False)
-        self.list.generateDataInRange(a, b, count)
+        self.list.setDataGetter(DataGetterFromFile())
 
     def f3(self):
-        index = self.getInt("Index of elem to insert")
-        print("Data to insert")
-        data = input()
-        self.list.insert(data, index)
+        index = self.getInt("Index to insert")
+        self.list.setData(index)
 
     def f4(self):
-        index = self.getInt("Index of elem to remove")
+        index = self.getInt("Index to remove")
         self.list.remove(index)
 
     def f5(self):
-        print(self.list.getCountOfUniqieElems())
+        a = self.getInt("First limit:")
+        b = self.getInt("Second limit:")
+        self.list.removeInRange(a, b)
 
     def f6(self):
-        self.list.show()
+        print(self.list.getCountOfUniqueElems())
 
     def f7(self):
+        self.list.show()
+
+    def f0(self):
         exit()
-
-    def f8(self):
-        count = self.getInt("Count of new items:")
-        generator = self.list.getDataFromKeyboardGenerator(count)
-        for i in range(count):
-            self.list.push(next(generator))
-
-    def f9(self):
-        count = self.getInt("Count of new items:")
-        a = self.getInt("First limit:", False)
-        b = self.getInt("Second limit:", False)
-        generator = self.list.generateDataInRangeGenerator(a, b, count)
-        for i in range(count):
-            self.list.push(next(generator))

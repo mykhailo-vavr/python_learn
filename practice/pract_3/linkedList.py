@@ -1,5 +1,4 @@
 from validation import Validation as V
-from random import randint
 
 
 class LinkedListIterator():
@@ -26,8 +25,10 @@ class Node:
 
 
 class LinkedList:
-    size = 0
-    head = None
+    def __init__(self):
+        self.size = 0
+        self.head = None
+        self.dataGetter = None
 
     def __iter__(self):
         return LinkedListIterator(self)
@@ -35,8 +36,24 @@ class LinkedList:
     def __len__(self):
         return self.size
 
+    def setDataGetter(self, dataGetter):
+        self.dataGetter = dataGetter
+
+    @V.isIntegerInRange(-1)
+    def setData(self, index):
+        if not self.dataGetter:
+            return print("No dataGetter selected")
+
+        data = self.dataGetter.getData()
+        if not data:
+            return print("Invalid data")
+
+        for i in range(len(data)):
+            if not self.insert(data[i], index + i):
+                return print(f"Impossible to set data with index {index}")
+
+    @V.isIntegerInRange(-1)
     def __getitem__(self, index):
-        V.isInteger(index)
         current = self.head
         i = 0
         while current != None:
@@ -71,8 +88,10 @@ class LinkedList:
         self.head = Node(data, self.head)
         self.size += 1
 
+    @V.isIntegerInRange(-1)
     def remove(self, index):
-        if V.isInRange(0, self.size) or not V.isInteger(index):
+        if index > self.size:
+            print(f"There is no elem with index {index}")
             return
         if index == 0:
             self.shift()
@@ -85,9 +104,20 @@ class LinkedList:
         current.pNext = current.pNext.pNext
         self.size -= 1
 
+    def removeInRange(self, a, b):
+        if a > b:
+            a, b = b, a
+
+        count = b - a + 1
+
+        for i in range(count):
+            self.remove(a)
+
+    @V.isIntegerInRange(0)
     def insert(self, data, index):
-        if V.isInRange(0, self.size) or not V.isInteger(index):
-            return
+        if index > self.size:
+            return print(f"Impossible to insert in index {index}")
+
         if index == 0:
             self.unshift(data)
             return
@@ -99,42 +129,17 @@ class LinkedList:
         current.pNext = Node(data, current.pNext)
         self.size += 1
 
-    def getDataFromKeyboard(self, count):
-        if not V.isInteger(count) or not V.isInRange(count, 0):
-            return
-        for i in range(count):
-            data = input()
-            self.push(data)
-
-    def generateDataInRange(self, a, b, count):
-        if not V.isInteger(a) or not V.isInteger(b) \
-                or not V.isInteger(count) or not V.isInRange(count, 0):
-            return
-        if a > b:
-            a, b = b, a
-        for i in range(count):
-            self.push(randint(a, b))
-
-    def getDataFromKeyboardGenerator(self, count):
-        if not V.isInteger(count) or not V.isInRange(count, 0):
-            return
-        for i in range(count):
-            yield input()
-
-    def generateDataInRangeGenerator(self, a, b, count):
-        if not V.isInteger(a) or not V.isInteger(b) \
-                or not V.isInteger(count) or not V.isInRange(count, 0):
-            return
-        if a > b:
-            a, b = b, a
-        for i in range(count):
-            yield randint(a, b)
-
     def show(self):
+        print("------ List ------")
+        if not self.size:
+            return print("List is empty\n------------------")
+
         for item in self:
             print(item)
 
-    def getCountOfUniqieElems(self):
+        print("------------------")
+
+    def getCountOfUniqueElems(self):
         arrOfUnique = []
         for i in range(len(self)):
             if not self[i] in arrOfUnique:
