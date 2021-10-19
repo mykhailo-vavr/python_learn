@@ -1,12 +1,14 @@
 from supportClasses.validation import Validation as V
+from patterns.memento.memento import Memento
+import copy
+
 import json
 
 
 class Collection:
-    collection = []
-
     def __init__(self, instance):
         self.instance = instance
+        self.collection = []
 
     def set_valid_data(self, set_func, *args):
         value = self.get_data_from_keyboard(
@@ -87,6 +89,12 @@ class Collection:
 
     def show(self):
         print(self)
+
+    def save(self):
+        return Memento(copy.deepcopy(self.collection))
+
+    def load(self, state):
+        self.collection = state
 
     def __str__(self):
         return json.dumps([obj.__dict__ for obj in self.collection], indent=2)

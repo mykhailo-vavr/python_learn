@@ -1,9 +1,7 @@
-from supportClasses.validation import Validation as V
-
-
 class FuncForOptions:
-    def __init__(self, collection):
+    def __init__(self, collection, caretaker):
         self.collection = collection
+        self.caretaker = caretaker
 
     @staticmethod
     def getId(methodName):
@@ -50,4 +48,16 @@ class FuncForOptions:
         self.collection.show()
 
     def f7(self):
+        self.caretaker.addMemento()
+
+    def f8(self):
+        self.caretaker.undo()
+
+    def f9(self):
+        self.caretaker.redo()
+
+    def f10(self):
+        self.caretaker.show()
+
+    def f0(self):
         exit()
