@@ -20,16 +20,24 @@ class Caretaker:
         self.statesPosition = -1
 
     def addMemento(self):
+        if not self.originator.save:
+            return -1
+
         memento = self.originator.save()
         self.states.append(memento)
         self.statesPosition = len(self.states) - 1
 
     def undo(self):
         if len(self.states) == 0:
-            return print("There are no saves")
+            print("There are no saves")
+            return -1
 
         if self.statesPosition == 0:
-            return print("You are already up to date with first save")
+            print("You are already up to date with first save")
+            return -1
+
+        if not self.originator.load:
+            return -1
 
         self.statesPosition -= 1
         memento = copy.deepcopy(self.states[self.statesPosition].getState())
@@ -37,10 +45,15 @@ class Caretaker:
 
     def redo(self):
         if len(self.states) == 0:
-            return print("There are no saves")
+            print("There are no saves")
+            return -1
 
         if len(self.states) - 1 == self.statesPosition:
-            return print("You are already up to date with last changes")
+            print("You are already up to date with last changes")
+            return -1
+
+        if not self.originator.load:
+            return -1
 
         self.statesPosition += 1
         memento = copy.deepcopy(self.states[self.statesPosition].getState())

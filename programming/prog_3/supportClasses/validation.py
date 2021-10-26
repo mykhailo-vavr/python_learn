@@ -3,8 +3,6 @@ import re
 
 
 class Validation:
-    dateFormat = "%d.%m.%Y"
-
     @staticmethod
     def isIntegerInRange(a, b=float("inf")):
         def _isIntegerInRange(func):
@@ -34,15 +32,15 @@ class Validation:
 
         return wrapper
 
-    @staticmethod
-    def isInstance(obj, instance):
-        return isinstance(obj, instance)
+    # @staticmethod
+    # def isInstance(obj, instance):
+    #     return isinstance(obj, instance)
 
     @staticmethod
     def isInSpecificFormat(regexp):
         def _isInSpecificFormat(func):
             def wrapper(self, value, *args):
-                if re.search(regexp, value):
+                if isinstance(value, str) and re.search(regexp, value):
                     return func(self, value, *args)
                 return self.set_valid_data(func, *args)
 
@@ -53,8 +51,10 @@ class Validation:
     @staticmethod
     def isValidDate(func):
         def wrapper(self, date, *args):
+            dateFormat = "%d.%m.%Y"
+
             try:
-                datetime.strptime(date, Validation.dateFormat)
+                datetime.strptime(date, dateFormat)
             except:
                 return self.set_valid_data(func, *args)
 

@@ -52,10 +52,9 @@ Choose the option:
     start(collection, caretaker)
 
 
-collection = Collection(Hotel)
-path = "C:/python_learn_lnu/programming/prog_3/data/data.json"
-collection.set_items_from_file(path)
+if __name__ == "__main__":
+    path = "C:/python_learn_lnu/programming/prog_3/data/data.json"
+    collection = Collection(Hotel, path)
+    caretaker = Caretaker(collection)
 
-caretaker = Caretaker(collection)
-
-start(collection, caretaker)
+    start(collection, caretaker)

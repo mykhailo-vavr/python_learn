@@ -1,14 +1,19 @@
+import sys
+
+sys.path.append('c:\\python_learn_lnu\\programming\\prog_3\\')
+
 from supportClasses.validation import Validation as V
 from patterns.memento.memento import Memento
 import copy
-
 import json
 
 
 class Collection:
-    def __init__(self, instance):
+    def __init__(self, instance, path=None):
         self.instance = instance
         self.collection = []
+        if path:
+            self.set_items_from_file(path)
 
     def set_valid_data(self, set_func, *args):
         value = self.get_data_from_keyboard(
@@ -20,15 +25,15 @@ class Collection:
         return input()
 
     def find(self, value):
-        str(value)
-        isFind = False
-        print("Objects with coincidence:")
+        foundItems = []
         for item in self.collection:
-            if str(item).find(value) != -1:
-                print(item)
-                isFind = True
-        if not isFind:
-            print("Oops, there is no coincidence")
+            if str(item).find(str(value)) != -1:
+                foundItems.append(item)
+
+        if len(foundItems) > 0:
+            return foundItems
+
+        return -1
 
     def sort(self, value):
         str(value)
@@ -45,20 +50,30 @@ class Collection:
         else:
             print(f"There is no item with id: {id}")
 
-    def add(self, pathToInput, pathToOutput=""):
+    def add(self, inputPath, outputPath=""):
         tempItem = self.instance()
-        tempItem.set_data_from_file(pathToInput)
-        if pathToOutput:
-            self.write_to_file(tempItem, pathToOutput)
+        if tempItem.get_data_from_file(inputPath) == -1:
+            print("Invalid path")
+            return -1
+
+        tempItem.set_data_from_file(inputPath)
+
+        if outputPath:
+            self.write_to_file(tempItem, outputPath)
         self.collection.append(tempItem)
 
     @V.isIntegerInRange(-1)
     def change(self, id, inputPath, outputPath=""):
         item = self.find_item_by_ID(id)
+        if item.get_data_from_file(inputPath) == -1:
+            print("Invalid path")
+            return -1
+
         if item:
             item.set_data_from_file(inputPath)
         else:
             print(f"There is no item with id: {id}")
+            return -1
 
         if outputPath:
             self.write_to_file(item, outputPath)
@@ -68,6 +83,7 @@ class Collection:
             if item.get_ID() == id:
                 self.item = item
                 return item
+        return None
 
     @classmethod
     def write_to_file(cls, path, item):
@@ -75,10 +91,13 @@ class Collection:
             with open(path, "w") as file:
                 file.write(str(item))
         except:
-            raise FileExistsError("Error on file reading")
+            return -1
 
     def set_items_from_file(self, path):
         data = self.instance.get_data_from_file(self.instance, path)
+
+        if data == -1:
+            return -1
 
         for obj in data["items"]:
             tempItem = self.instance()
@@ -99,6 +118,11 @@ class Collection:
     def __str__(self):
         return json.dumps([obj.__dict__ for obj in self.collection], indent=2)
 
+    def __len__(self):
+        return len(self.collection)
+
     @V.isIntegerInRange(-1)
-    def __getitem__(self, value):
-        return self.collection[value]
+    def __getitem__(self, index):
+        if index >= len(self.collection):
+            return -1
+        return self.collection[index]

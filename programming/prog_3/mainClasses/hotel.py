@@ -1,3 +1,7 @@
+import sys
+
+sys.path.append('c:\\python_learn_lnu\\programming\\prog_3\\')
+
 from supportClasses.validation import Validation as V
 import json
 
@@ -26,7 +30,7 @@ class Hotel:
     def set_empty_values(self):
         for key, value in vars(self).items():
             if value == None:
-                getattr(self, f"set_{key[8:]}")("-1")
+                getattr(self, f"set_{key[8:]}")(None)
 
     def set_valid_data(self, set_func):
         value = self.get_data_from_keyboard(
@@ -90,15 +94,18 @@ class Hotel:
             with open(path) as file:
                 data = json.load(file)
         except:
-            raise FileExistsError("Error on file reading")
+            return -1
         return data
 
     def set_data_from_file(self, path):
         data = self.get_data_from_file(path)
+        if data == -1:
+            print("Invalid path")
+            return -1
         for key, value in data.items():
             try:
                 getattr(self, f"set_{key}")(value)
             except:
                 print("Error: Invalid key or value")
-                return
+                return -1
         self.set_empty_values()
