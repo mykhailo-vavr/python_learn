@@ -1,0 +1,8 @@
+{
+  "name": "add",
+  "options": {
+    "listBeforeChanges": "[]",
+    "positionOfInsert": 0,
+    "listAfterChanges": "[4, 5, 6, 5, 1, 4, 4, 2, 4, 3]"
+  }
+}
