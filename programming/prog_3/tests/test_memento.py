@@ -10,6 +10,14 @@ from patterns.memento.memento import Memento, Caretaker
 class TestMemento(TestCase):
     path = "C:/python_learn_lnu/programming/prog_3/data/data.json"
 
+    def test_init(self):
+        collection = Collection(Hotel, self.path)
+        caretaker = Caretaker(collection)
+
+        self.assertEqual(caretaker.originator, collection)
+        self.assertEqual(len(caretaker.states), 0)
+        self.assertEqual(caretaker.statesPosition, -1)
+
     def test_addMemento(self):
         collection = Collection(Hotel, self.path)
         caretaker = Caretaker(collection)

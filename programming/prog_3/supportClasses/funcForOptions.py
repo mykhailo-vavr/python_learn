@@ -23,7 +23,8 @@ class FuncForOptions:
     def f1(self):
         print("String for find:")
         str = input()
-        self.collection.find(str)
+        for item in self.collection.find(str):
+            print(item)
 
     def f2(self):
         print("Attribute for sort:")
@@ -32,7 +33,7 @@ class FuncForOptions:
 
     def f3(self):
         id = self.getId("delete")
-        inPath, outPath = self.getPath()
+        inPath, outPath = self.getPath(False, True)
         self.collection.delete(id, outPath)
 
     def f4(self):

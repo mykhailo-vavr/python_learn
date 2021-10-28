@@ -6,6 +6,7 @@ from supportClasses.validation import Validation as V
 from patterns.memento.memento import Memento
 import copy
 import json
+import os.path
 
 
 class Collection:
@@ -36,7 +37,13 @@ class Collection:
         return -1
 
     def sort(self, value):
-        str(value)
+        try:
+            if self.collection[0]:
+                a = getattr(self.collection[0], f"get_{value}")()
+            else:
+                return print("Collection is empty")
+        except:
+            return print("Invalid parameter for sort")
         self.collection.sort(key=lambda x: getattr(x, f"get_{value}")(),
                              reverse=False)
 
@@ -44,7 +51,7 @@ class Collection:
     def delete(self, id, path=""):
         item = self.find_item_by_ID(id)
         if path:
-            self.write_to_file(item, path)
+            self.write_to_file(path, copy.copy(item))
         if item:
             self.collection.remove(item)
         else:
@@ -59,7 +66,10 @@ class Collection:
         tempItem.set_data_from_file(inputPath)
 
         if outputPath:
-            self.write_to_file(tempItem, outputPath)
+            self.write_to_file(
+                outputPath,
+                copy.copy(tempItem),
+            )
         self.collection.append(tempItem)
 
     @V.isIntegerInRange(-1)
@@ -76,7 +86,7 @@ class Collection:
             return -1
 
         if outputPath:
-            self.write_to_file(item, outputPath)
+            self.write_to_file(outputPath, copy.copy(item))
 
     def find_item_by_ID(self, id):
         for item in self.collection:
@@ -87,6 +97,9 @@ class Collection:
 
     @classmethod
     def write_to_file(cls, path, item):
+        if not os.path.exists(path):
+            print(f"File with path {path} does not exist")
+            return
         try:
             with open(path, "w") as file:
                 file.write(str(item))

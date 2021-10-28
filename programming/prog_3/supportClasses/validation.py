@@ -69,8 +69,8 @@ class Validation:
             else:
                 endDate = date
 
-            startDate = datetime.strptime(startDate, Validation.dateFormat)
-            endDate = datetime.strptime(endDate, Validation.dateFormat)
+            startDate = datetime.strptime(startDate, dateFormat)
+            endDate = datetime.strptime(endDate, dateFormat)
 
             if startDate < endDate:
                 return func(self, date)
