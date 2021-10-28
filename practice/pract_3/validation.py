@@ -1,17 +1,19 @@
 class Validation:
-    @staticmethod
-    def isInteger(value):
-        if not isinstance(value, int):
-            try:
-                int(value)
-            except:
-                raise ValueError("Value should be integer")
-        return True
+    def isIntegerInRange(a=float("-inf"), b=float("inf")):
+        def _isIntegerInRange(func):
+            def wrapper(self, value, *args):
+                if not isinstance(value, int):
+                    try:
+                        int(value)
+                    except:
+                        return print(f"Incorrect value in {func.__name__}")
 
-    @staticmethod
-    def isInRange(value, a, b = float("inf")):
-        if a > b:
-            a, b = b, a
-        if value < a or value > b:
-            raise ValueError("Value should be in range")
-        return True
+                value = int(value)
+
+                if a < value and value < b:
+                    return func(self, value, *args)
+                return print(f"Incorrect value in {func.__name__}")
+
+            return wrapper
+
+        return _isIntegerInRange
