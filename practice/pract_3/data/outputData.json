@@ -1,8 +1,8 @@
 {
   "name": "add",
   "options": {
-    "listBeforeChanges": "[]",
-    "positionOfInsert": 0,
-    "listAfterChanges": "[4, 5, 6, 5, 1, 4, 4, 2, 4, 3]"
+    "listBeforeChanges": "[88, 77, 66, 17, 1, 1]",
+    "positionOfInsert": 5,
+    "listAfterChanges": "[88, 77, 66, 17, 1, 347222, 1]"
   }
 }
