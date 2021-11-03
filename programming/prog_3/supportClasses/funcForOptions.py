@@ -1,16 +1,12 @@
-from programming.prog_3.supportClasses.validation import Validation
-
 class FuncForOptions:
-    def __init__(self, collection):
+    def __init__(self, collection, caretaker):
         self.collection = collection
+        self.caretaker = caretaker
 
     @staticmethod
-    def getIdAndPath(methodName):
+    def getId(methodName):
         print(f"Id for {methodName}:")
         id = input()
-        Validation.isInteger(id)
-        id = int(id)
-        Validation.isInRange(id, 0)
         return id
 
     @staticmethod
@@ -35,7 +31,7 @@ class FuncForOptions:
         self.collection.sort(attr)
 
     def f3(self):
-        id = self.getIdAndPath("delete")
+        id = self.getId("delete")
         inPath, outPath = self.getPath()
         self.collection.delete(id, outPath)
 
@@ -44,7 +40,7 @@ class FuncForOptions:
         self.collection.add(inPath, outPath)
 
     def f5(self):
-        id = self.getIdAndPath("change")
+        id = self.getId("change")
         inPath, outPath = self.getPath(True)
         self.collection.change(id, inPath, outPath)
 
@@ -52,4 +48,16 @@ class FuncForOptions:
         self.collection.show()
 
     def f7(self):
+        self.caretaker.addMemento()
+
+    def f8(self):
+        self.caretaker.undo()
+
+    def f9(self):
+        self.caretaker.redo()
+
+    def f10(self):
+        self.caretaker.show()
+
+    def f0(self):
         exit()
