@@ -5,7 +5,7 @@ from supportClasses.funcForOptions import FuncForOptions
 
 # use for input "C:/python_learn_lnu/programming/prog_3/data/testData.json"
 # use for output "C:/python_learn_lnu/programming/prog_3/data/outputData.json"
-# use to fill collection "C:/python_learn_lnu/programming/prog_3/data/data.json"
+# use to fill collection "C:/python_learn_lnu/programming/prog_3/inputData/data.json"
 
 
 def options(option, collection, caretaker):
@@ -53,7 +53,7 @@ Choose the option:
 
 
 if __name__ == "__main__":
-    path = "C:/python_learn_lnu/programming/prog_3/data/data.json"
+    path = "C:/python_learn_lnu/programming/prog_3/data/inputData.json"
     collection = Collection(Hotel, path)
     caretaker = Caretaker(collection)
 

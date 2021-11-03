@@ -44,7 +44,9 @@ class Collection:
                 return print("Collection is empty")
         except:
             return print("Invalid parameter for sort")
-        self.collection.sort(key=lambda x: getattr(x, f"get_{value}")(),
+        # case insensitive sort
+        self.collection.sort(key=lambda x: str(getattr(x, f"get_{value}")
+                                               ()).lower(),
                              reverse=False)
 
     @V.isIntegerInRange(-1)
