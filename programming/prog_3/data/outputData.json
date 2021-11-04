@@ -1,14 +1,5 @@
 [
   {
-    "_Hotel__ID": 0,
-    "_Hotel__checkin_datetime": "01.01.2000",
-    "_Hotel__checkout_datetime": "01.01.2001",
-    "_Hotel__city": "Rome",
-    "_Hotel__booking_number": "AS123123",
-    "_Hotel__guest_name": "Jean",
-    "_Hotel__price": 500
-  },
-  {
     "_Hotel__ID": 1,
     "_Hotel__checkin_datetime": "01.01.2000",
     "_Hotel__checkout_datetime": "01.01.2001",
@@ -25,5 +16,14 @@
     "_Hotel__booking_number": "AS121243",
     "_Hotel__guest_name": "Jet",
     "_Hotel__price": 200
+  },
+  {
+    "_Hotel__ID": 3,
+    "_Hotel__checkin_datetime": "01.01.2000",
+    "_Hotel__checkout_datetime": "01.01.2001",
+    "_Hotel__city": "Berlin",
+    "_Hotel__booking_number": "AS121243",
+    "_Hotel__guest_name": "Tony",
+    "_Hotel__price": 4545
   }
 ]

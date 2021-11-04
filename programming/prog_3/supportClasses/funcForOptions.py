@@ -34,6 +34,7 @@ class FuncForOptions:
     def f3(self):
         id = self.getId("delete")
         path = ""
+        # remember this place. Comment in no ask commit
         if self.askForPath("Do you want to output data?"):
             path = self.getPath("Write path to output data:")
         self.collection.delete(id, path)
@@ -41,16 +42,16 @@ class FuncForOptions:
     def f4(self):
         inPath = self.getPath("Write path to input data:")
         outPath = ""
-        # if self.askForPath("Do you want to output data?"):
-        outPath = self.getPath("Write path to output data:")
+        if self.askForPath("Do you want to output data?"):
+            outPath = self.getPath("Write path to output data:")
         self.collection.add(inPath, outPath)
 
     def f5(self):
         id = self.getId("change")
         inPath = self.getPath("Write path to input data:")
         outPath = ""
-        # if self.askForPath("Do you want to output data?"):
-        outPath = self.getPath("Write path to output data:")
+        if self.askForPath("Do you want to output data?"):
+            outPath = self.getPath("Write path to output data:")
         self.collection.change(id, inPath, outPath)
 
     def f6(self):

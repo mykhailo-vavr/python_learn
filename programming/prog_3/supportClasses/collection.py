@@ -71,6 +71,7 @@ class Collection:
             return -1
 
         tempItem.set_data_from_file(inputPath)
+        tempItem.set_empty_values()
 
         # if outputPath:
         #     self.write_item_to_file(
@@ -150,7 +151,7 @@ class Collection:
         data = self.get_data_from_file(path)
         if data == -1:
             return -1
-        return json.dumps(data["items"], indent=2)
+        return json.dumps(data, indent=2)
 
     def set_items_from_file(self, path):
         data = self.get_data_from_file(path)
@@ -169,17 +170,17 @@ class Collection:
         print(self)
 
     def save(self):
-        # return Memento({
-        #     "collection": copy.deepcopy(self.collection),
-        #     "dataFromFile": self.get_json_from_file(self.outPath)
-        # })
-        return Memento(copy.deepcopy(self.collection))
+        return Memento({
+            "collection": copy.deepcopy(self.collection),
+            "dataFromFile": self.get_json_from_file(self.outPath)
+        })
+        # return Memento(copy.deepcopy(self.collection))
 
     def load(self, state):
-        # self.collection = state.get("collection")
-        # self.write_collection_to_file(self.outPath, state.get("dataFromFile"))
-        self.collection = state
-        self.write_collection_to_file(self.outPath)
+        self.collection = state.get("collection")
+        self.write_to_file(self.outPath, state.get("dataFromFile"))
+        # self.collection = state
+        # self.write_collection_to_file(self.outPath)
 
     def __str__(self):
         return json.dumps([obj.__dict__ for obj in self.collection], indent=2)

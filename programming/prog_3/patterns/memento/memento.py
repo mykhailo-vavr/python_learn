@@ -10,7 +10,8 @@ class Memento:
         return self.state
 
     def __str__(self):
-        return json.dumps([obj.__dict__ for obj in self.state], indent=2)
+        return json.dumps(
+            [obj.__dict__ for obj in self.state.get("collection")], indent=2)
 
 
 class Caretaker:
