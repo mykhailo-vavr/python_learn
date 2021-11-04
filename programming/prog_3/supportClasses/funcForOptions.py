@@ -10,15 +10,15 @@ class FuncForOptions:
         return id
 
     @staticmethod
-    def getPath(isInPath=False, isOutPath=False):
-        inPath, outPath = "", ""
-        if isInPath:
-            print("Write path to input data:")
-            inPath = input()
-        if isOutPath:
-            print("Write path to output data:")
-            outPath = input()
-        return inPath, outPath
+    def getPath(message):
+        print(f"{message}")
+        return input()
+
+    def askForPath(self, message):
+        print(f"{message}\nIf you want, print 'y'")
+        if input() == "y":
+            return True
+        return False
 
     def f1(self):
         print("String for find:")
@@ -33,16 +33,24 @@ class FuncForOptions:
 
     def f3(self):
         id = self.getId("delete")
-        inPath, outPath = self.getPath(False, True)
-        self.collection.delete(id, outPath)
+        path = ""
+        if self.askForPath("Do you want to output data?"):
+            path = self.getPath("Write path to output data:")
+        self.collection.delete(id, path)
 
     def f4(self):
-        inPath, outPath = self.getPath(True)
+        inPath = self.getPath("Write path to input data:")
+        outPath = ""
+        # if self.askForPath("Do you want to output data?"):
+        outPath = self.getPath("Write path to output data:")
         self.collection.add(inPath, outPath)
 
     def f5(self):
         id = self.getId("change")
-        inPath, outPath = self.getPath(True)
+        inPath = self.getPath("Write path to input data:")
+        outPath = ""
+        # if self.askForPath("Do you want to output data?"):
+        outPath = self.getPath("Write path to output data:")
         self.collection.change(id, inPath, outPath)
 
     def f6(self):

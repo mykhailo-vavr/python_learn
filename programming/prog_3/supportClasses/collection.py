@@ -1,3 +1,4 @@
+from os import write
 import sys
 
 sys.path.append('c:\\python_learn_lnu\\programming\\prog_3\\')
@@ -10,11 +11,12 @@ import os.path
 
 
 class Collection:
-    def __init__(self, instance, path=None):
+    def __init__(self, instance, inPath=None, outPath=None):
         self.instance = instance
         self.collection = []
-        if path:
-            self.set_items_from_file(path)
+        self.outPath = outPath
+        if inPath:
+            self.set_items_from_file(inPath)
 
     def set_valid_data(self, set_func, *args):
         value = self.get_data_from_keyboard(
@@ -52,12 +54,15 @@ class Collection:
     @V.isIntegerInRange(-1)
     def delete(self, id, path=""):
         item = self.find_item_by_ID(id)
-        if path:
-            self.write_to_file(path, copy.copy(item))
         if item:
             self.collection.remove(item)
         else:
             print(f"There is no item with id: {id}")
+
+        if path:
+            # self.write_item_to_file(path, copy.copy(item))
+            self.write_collection_to_file(path)
+            self.outPath = path
 
     def add(self, inputPath, outputPath=""):
         tempItem = self.instance()
@@ -67,12 +72,15 @@ class Collection:
 
         tempItem.set_data_from_file(inputPath)
 
-        if outputPath:
-            self.write_to_file(
-                outputPath,
-                copy.copy(tempItem),
-            )
+        # if outputPath:
+        #     self.write_item_to_file(
+        #         outputPath,
+        #         copy.copy(tempItem),
+        #     )
         self.collection.append(tempItem)
+        if outputPath:
+            self.write_collection_to_file(outputPath)
+            self.outPath = outputPath
 
     @V.isIntegerInRange(-1)
     def change(self, id, inputPath, outputPath=""):
@@ -88,7 +96,9 @@ class Collection:
             return -1
 
         if outputPath:
-            self.write_to_file(outputPath, copy.copy(item))
+            # self.write_item_to_file(outputPath, copy.copy(item))
+            self.write_collection_to_file(outputPath)
+            self.outPath = outputPath
 
     def find_item_by_ID(self, id):
         for item in self.collection:
@@ -97,8 +107,7 @@ class Collection:
                 return item
         return None
 
-    @classmethod
-    def write_to_file(cls, path, item):
+    def write_item_to_file(self, path, item):
         if not os.path.exists(path):
             print(f"File with path {path} does not exist")
             return
@@ -108,8 +117,43 @@ class Collection:
         except:
             return -1
 
+    def write_collection_to_file(self, path):
+        if not os.path.exists(path):
+            print(f"File with path {path} does not exist")
+            return
+        try:
+            with open(path, "w") as file:
+                file.write(str(self))
+        except:
+            return -1
+
+    # maybe unnecessary method
+    def write_to_file(self, path, json):
+        if not os.path.exists(path):
+            print(f"File with path {path} does not exist")
+            return
+        try:
+            with open(path, "w") as file:
+                file.write(json)
+        except:
+            return -1
+
+    def get_data_from_file(self, path):
+        try:
+            with open(path) as file:
+                data = json.load(file)
+        except:
+            return -1
+        return data
+
+    def get_json_from_file(self, path):
+        data = self.get_data_from_file(path)
+        if data == -1:
+            return -1
+        return json.dumps(data["items"], indent=2)
+
     def set_items_from_file(self, path):
-        data = self.instance.get_data_from_file(self.instance, path)
+        data = self.get_data_from_file(path)
 
         if data == -1:
             return -1
@@ -125,10 +169,17 @@ class Collection:
         print(self)
 
     def save(self):
+        # return Memento({
+        #     "collection": copy.deepcopy(self.collection),
+        #     "dataFromFile": self.get_json_from_file(self.outPath)
+        # })
         return Memento(copy.deepcopy(self.collection))
 
     def load(self, state):
+        # self.collection = state.get("collection")
+        # self.write_collection_to_file(self.outPath, state.get("dataFromFile"))
         self.collection = state
+        self.write_collection_to_file(self.outPath)
 
     def __str__(self):
         return json.dumps([obj.__dict__ for obj in self.collection], indent=2)
