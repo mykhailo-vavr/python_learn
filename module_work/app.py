@@ -21,7 +21,7 @@ def start(collection):
 Choose the option:
     1. Show collection
     2. Show hour with the largest number of orders
-    3. Write to file point with the largest number of orders1
+    3. Write to file point with the largest number of orders
     0. Exit
     """)
 

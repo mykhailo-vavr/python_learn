@@ -55,10 +55,11 @@ class Collection:
         if name in self.uniqueNames:
             print(f"There is someone with name {name}")
             return False
+        self.uniqueNames.append(name)
 
         time = item.get_time()
         point = item.get_point()
-        if self.count_item_by_point(point, time, date) > 20:
+        if self.count_item_by_point(point, time) > 20:
             print(f"Too many people in point {point} in date {time}")
 
     def write_to_file(self, path, item):
