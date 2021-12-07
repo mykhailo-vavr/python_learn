@@ -3,6 +3,8 @@ from hotels.models import Hotel
 
 
 class HotelListSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
     class Meta:
         model = Hotel
         fields = '__all__'
