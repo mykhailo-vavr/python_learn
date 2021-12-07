@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'hotels',
     'djoser',
+    'drf_yasg',
+    'psycopg2',
 ]
 
 MIDDLEWARE = [
@@ -74,10 +76,20 @@ WSGI_APPLICATION = 'REST_API.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'hotel',
+        'USER': 'postgres',
+        'PASSWORD': 'valmons222rojan',
+        'HOST': '127.0.0.1',
+        'PORT': '8000',
     }
 }
 
