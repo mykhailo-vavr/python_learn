@@ -1,16 +1,17 @@
-from django.db.models.query import QuerySet
 from rest_framework import generics
-from rest_framework.serializers import Serializer
 from hotels.serializers import HotelDetailSerializer, HotelListSerializer
 from hotels.models import Hotel
 from hotels.permissions import isOwnerReadOnly
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from .services import PaginationHotels
+from .types import STATUS_200
+from .support_functions import stringify
 
 
-class HotelCreateView(generics.CreateAPIView):
+class HotelCreateView(generics.CreateAPIView, generics.ListAPIView):
     serializer_class = HotelDetailSerializer
+    paginator = PaginationHotels()
 
     def get_queryset(self, ):
         return Hotel.objects.all()
@@ -18,7 +19,30 @@ class HotelCreateView(generics.CreateAPIView):
     def get(self, request, *args, **kwargs):
         hotels = self.get_queryset()
         serializer = self.serializer_class(hotels, many=True)
-        return Response(serializer.data)
+        page = self.paginator.paginate_queryset(serializer.data, request)
+        return self.paginator.get_paginated_response(page)
+        # return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        hotel_data = request.data
+        print(hotel_data)
+        new_hotel = Hotel(
+            user=hotel_data['user'],
+            booking_number=hotel_data['booking_number'],
+            checkin_datetime=hotel_data['checkin_datetime'],
+            checkout_datetime=hotel_data['checkout_datetime'],
+            price=hotel_data['price'],
+            city=hotel_data['city'],
+            guest_name=hotel_data['guest_name'],
+        )
+        new_hotel.save()
+        serializer = self.serializer_class(new_hotel)
+        # return Response(serializer.data)
+        return Response(
+            stringify({
+                'status': STATUS_200,
+                'message': 'Customer has been successfully created.'
+            }))
 
 
 # class HotelListView(generics.ListAPIView):

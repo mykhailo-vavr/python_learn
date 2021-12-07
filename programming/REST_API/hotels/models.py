@@ -43,9 +43,9 @@ class Hotel(models.Model):
         verbose_name='Price',
         validators=[MinValueValidator(limit_value=0, )],
     )
-    user = models.ForeignKey(User,
-                             verbose_name="User",
-                             on_delete=models.CASCADE)
+    # user = models.ForeignKey(User,
+    #                          verbose_name="User",
+    #                          on_delete=models.CASCADE)
 
     # def save(self, *args, **kwargs):
     #     if self.checkout_datetime < self.checkout_datetime:
